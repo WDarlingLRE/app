@@ -2,6 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { marketplaceListings } from "@/lib/data";
 
+export function generateStaticParams() {
+  return marketplaceListings
+    .filter((listing) => listing.kind === "shop")
+    .map((listing) => ({ slug: listing.slug }));
+}
+
 type ShopPageProps = {
   params: Promise<{ slug: string }>;
 };

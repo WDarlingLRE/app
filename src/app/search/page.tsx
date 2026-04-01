@@ -1,22 +1,28 @@
+"use client";
+
+import { Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { ListingCard } from "@/components/search/listing-card";
 import { searchMarketplace } from "@/lib/search/ranking";
 import { hairTypeTaxonomy, languageTaxonomy, priceTaxonomy, specialtyTaxonomy } from "@/lib/taxonomies/specialties";
 import type { PriceBand } from "@/lib/types";
 
-type SearchPageProps = {
-  searchParams: Promise<{
-    query?: string;
-    location?: string;
-    style?: string;
-    hairType?: string;
-    price?: PriceBand;
-    language?: string;
-  }>;
-};
+function isPriceBand(value: string | null): value is PriceBand {
+  return value === "under-50" || value === "under-70" || value === "70-plus";
+}
 
-export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const filters = await searchParams;
+function SearchPageContent() {
+  const searchParams = useSearchParams();
+  const price = searchParams.get("price");
+  const filters = {
+    query: searchParams.get("query") ?? undefined,
+    location: searchParams.get("location") ?? undefined,
+    style: searchParams.get("style") ?? undefined,
+    hairType: searchParams.get("hairType") ?? undefined,
+    price: isPriceBand(price) ? price : undefined,
+    language: searchParams.get("language") ?? undefined,
+  };
   const results = searchMarketplace(filters);
 
   return (
@@ -141,5 +147,13 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         </section>
       </div>
     </main>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense>
+      <SearchPageContent />
+    </Suspense>
   );
 }
