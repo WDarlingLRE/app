@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ListingKind {
+  BARBER
+  SHOP
+}
+
+enum VerificationStatus {
+  DRAFT
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+model Listing {
+  id                  String             @id @default(cuid())
+  slug                String             @unique
+  kind                ListingKind
+  name                String
+  tagline             String
+  description         String
+  bookingUrl          String?
+  verified            Boolean            @default(false)
+  verificationStatus  VerificationStatus @default(PENDING)
+  profileCompleteness Int                @default(0)
+  ratingAverage       Float              @default(0)
+  reviewCount         Int                @default(0)
+  priceBand           String
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  location            Location?
+  shop                Shop?
+  barber              Barber?
+  reviews             Review[]
+  services            Service[]
+  listingSpecialties  ListingSpecialty[]
+  listingHairTypes    ListingHairType[]
+  listingLanguages    ListingLanguage[]
+}
+
+model Barber {
+  id        String   @id @default(cuid())
+  listingId  String   @unique
+  listing    Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  shopId     String?
+  shop       Shop?    @relation(fields: [shopId], references: [id])
+  bio        String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Shop {
+  id         String   @id @default(cuid())
+  listingId   String   @unique
+  listing     Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  hours       String?
+  barbers     Barber[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Location {
+  id           String  @id @default(cuid())
+  listingId     String  @unique
+  listing       Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  addressLine1  String?
+  neighborhood  String?
+  city          String
+  state         String
+  postalCode    String?
+  latitude      Float?
+  longitude     Float?
+}
+
+model Service {
+  id         String  @id @default(cuid())
+  listingId   String
+  listing     Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  name       String
+  priceLabel String
+  duration   String
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  listingId   String
+  listing     Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  authorName String
+  rating     Int
+  body       String
+  createdAt  DateTime @default(now())
+}
+
+model Specialty {
+  id        String             @id @default(cuid())
+  slug      String             @unique
+  label     String
+  listings  ListingSpecialty[]
+}
+
+model HairType {
+  id        String            @id @default(cuid())
+  slug      String            @unique
+  label     String
+  listings  ListingHairType[]
+}
+
+model Language {
+  id        String            @id @default(cuid())
+  slug      String            @unique
+  label     String
+  listings  ListingLanguage[]
+}
+
+model ListingSpecialty {
+  listingId    String
+  specialtyId  String
+  listing      Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  specialty    Specialty @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
+
+  @@id([listingId, specialtyId])
+}
+
+model ListingHairType {
+  listingId   String
+  hairTypeId  String
+  listing     Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  hairType    HairType @relation(fields: [hairTypeId], references: [id], onDelete: Cascade)
+
+  @@id([listingId, hairTypeId])
+}
+
+model ListingLanguage {
+  listingId   String
+  languageId  String
+  listing     Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  language    Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@id([listingId, languageId])
+}

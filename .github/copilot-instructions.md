@@ -1,0 +1,7 @@
+- Use Next.js App Router with TypeScript and keep public pages server-rendered where possible.
+- This app is The Hare: a discovery-first barber and salon marketplace with a premium monochrome brand system.
+- Prefer sleek black, white, and grey styling with restrained motion and high contrast.
+- Phase 1 focuses on discovery, filters, rankings, profiles, reviews, and onboarding. Native in-app booking is out of scope.
+- Support both individual barbers and shops in the same marketplace model.
+- Keep ranking logic explicit and easy to tune. Do not introduce opaque recommendation systems.
+- Favor minimal, production-oriented code over demo boilerplate.
