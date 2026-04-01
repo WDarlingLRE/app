@@ -58,7 +58,7 @@ export default function OnboardingPage() {
                   <input className="w-full rounded-[18px] border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-black/30" placeholder="https://" />
                 </label>
 
-                <button type="button" className="mt-2 rounded-[18px] bg-black px-4 py-3 text-sm font-medium text-white transition hover:bg-neutral-800">
+                <button type="button" className="primary-cta mt-2 rounded-[18px] px-4 py-3 text-sm font-medium transition hover:bg-neutral-800">
                   Submit interest
                 </button>
               </div>

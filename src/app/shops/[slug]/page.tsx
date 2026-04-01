@@ -27,7 +27,7 @@ export default async function ShopPage({ params }: ShopPageProps) {
         <section className="glass-panel mt-4 rounded-[34px] p-6 sm:p-8">
           <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
             <div>
-              <div className="section-label">Shop or salon</div>
+              <div className="section-label">Shop profile</div>
               <h1 className="display-title mt-3 text-5xl sm:text-6xl">{shop.name}</h1>
               <p className="mt-4 max-w-2xl text-lg leading-8 text-neutral-600">{shop.tagline}</p>
               <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-600">{shop.description}</p>
@@ -40,7 +40,7 @@ export default async function ShopPage({ params }: ShopPageProps) {
             </div>
 
             <aside className="rounded-[30px] border border-black/10 bg-white/82 p-6 shadow-[0_18px_60px_rgba(16,16,16,0.06)]">
-              <div className="section-label">Market trust</div>
+              <div className="section-label">At a glance</div>
               <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
                 <div>
                   <div className="text-sm text-neutral-500">Rating</div>
@@ -51,11 +51,11 @@ export default async function ShopPage({ params }: ShopPageProps) {
                   <div className="mt-1 text-3xl font-semibold text-neutral-950">{shop.reviewCount}</div>
                 </div>
                 <div>
-                  <div className="text-sm text-neutral-500">Listing status</div>
-                  <div className="mt-1 text-lg font-semibold text-neutral-950">{shop.verified ? "Verified" : "Pending"}</div>
+                  <div className="text-sm text-neutral-500">Profile status</div>
+                  <div className="mt-1 text-lg font-semibold text-neutral-950">{shop.verified ? "Verified" : "Pending review"}</div>
                 </div>
                 <div>
-                  <div className="text-sm text-neutral-500">Price band</div>
+                  <div className="text-sm text-neutral-500">Price range</div>
                   <div className="mt-1 text-lg font-semibold text-neutral-950">{shop.priceBandLabel}</div>
                 </div>
               </div>
@@ -75,14 +75,14 @@ export default async function ShopPage({ params }: ShopPageProps) {
             </div>
           </article>
 
-          <article className="rounded-[30px] border border-black/10 bg-black p-6 text-white shadow-[0_30px_90px_rgba(0,0,0,0.28)]">
-            <div className="section-label text-white/55">Services and booking</div>
+          <article className="dark-surface rounded-[30px] border border-black/10 p-6 shadow-[0_30px_90px_rgba(0,0,0,0.28)]">
+            <div className="section-label text-white/80">Services and booking</div>
             <div className="mt-5 space-y-4">
               {shop.services.map((service) => (
                 <div key={service.name} className="flex items-center justify-between rounded-[22px] border border-white/12 px-4 py-4">
                   <div>
                     <div className="font-medium text-white">{service.name}</div>
-                    <div className="mt-1 text-sm text-white/64">{service.duration}</div>
+                    <div className="mt-1 text-sm text-white/85">{service.duration}</div>
                   </div>
                   <div className="text-sm font-semibold text-white">{service.price}</div>
                 </div>
@@ -90,7 +90,7 @@ export default async function ShopPage({ params }: ShopPageProps) {
             </div>
 
             <a href={shop.bookingUrl} className="mt-6 inline-flex rounded-full bg-white px-5 py-3 text-sm font-medium text-black transition hover:bg-neutral-200">
-              Continue to booking
+              Open booking page
             </a>
           </article>
         </section>

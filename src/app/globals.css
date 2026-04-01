@@ -90,6 +90,70 @@ textarea {
 	border: 1px solid rgba(16, 16, 16, 0.06);
 }
 
+.dark-surface {
+	background: var(--surface-inverse);
+	color: #ffffff;
+}
+
+.dark-surface .section-label,
+.dark-surface a,
+.dark-surface button {
+	color: inherit;
+}
+
+.dark-surface a.text-black,
+.dark-surface a.text-black:visited,
+.dark-surface a.text-black:hover,
+.dark-surface a.text-black:active,
+.dark-surface a.text-black:focus-visible {
+	color: #000000;
+}
+
+.primary-cta {
+	background: var(--surface-inverse);
+	color: #ffffff !important;
+}
+
+.primary-cta:visited,
+.primary-cta:hover,
+.primary-cta:active,
+.primary-cta:focus-visible {
+	color: #ffffff !important;
+}
+
+.field-label {
+	display: block;
+	margin-bottom: 0.6rem;
+	font-size: 0.78rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--muted-soft);
+}
+
+.field-input {
+	width: 100%;
+	border-radius: 18px;
+	border: 1px solid rgba(16, 16, 16, 0.1);
+	background: rgba(255, 255, 255, 0.94);
+	padding: 0.9rem 1rem;
+	outline: none;
+	transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.field-input:focus {
+	border-color: rgba(16, 16, 16, 0.28);
+	box-shadow: 0 0 0 4px rgba(16, 16, 16, 0.05);
+	background: rgba(255, 255, 255, 0.98);
+}
+
+.field-help {
+	margin-top: 0.55rem;
+	font-size: 0.85rem;
+	line-height: 1.5;
+	color: var(--muted);
+}
+
 .hairline {
 	height: 1px;
 	width: 100%;
@@ -109,8 +173,46 @@ textarea {
 	opacity: 0.55;
 }
 
+.ranked-rail {
+	display: flex;
+	flex: 1;
+	min-height: 0;
+	overflow: hidden;
+	mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.ranked-rail-track {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	padding-block: 0.25rem;
+	will-change: transform;
+	animation: ranked-rail-scroll 24s linear infinite;
+}
+
+.ranked-rail:hover .ranked-rail-track {
+	animation-play-state: paused;
+}
+
+@keyframes ranked-rail-scroll {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(-50%);
+	}
+}
+
 @media (max-width: 640px) {
 	.page-shell {
 		width: min(100% - 20px, 1200px);
+	}
+
+	.ranked-rail {
+		mask-image: none;
+	}
+
+	.ranked-rail-track {
+		animation: none;
 	}
 }
